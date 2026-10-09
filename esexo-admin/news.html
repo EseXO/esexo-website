@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EseXO Admin — News</title>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('esexo_admin_theme');
+        document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+    })();
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/admin.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+  <div class="admin-shell">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar">
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <button type="button" class="menu-btn" id="menu-btn" aria-label="Menu">☰</button>
+          <h1 class="font-display topbar-title">News</h1>
+        </div>
+        <div class="topbar-actions">
+          <button type="button" class="icon-btn" id="theme-toggle" aria-label="Toggle theme">◐</button>
+          <span class="topbar-user" id="admin-username"></span>
+          <button type="button" class="btn btn-primary btn-sm" id="btn-add">+ Add News</button>
+        </div>
+      </header>
+      <main class="content">
+        <div id="list" class="table-wrap"><div class="empty-state">Loading…</div></div>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal">
+    <div class="modal-panel wide">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem">
+        <h2 class="font-display" id="modal-title" style="margin:0;font-size:1.15rem">Add News</h2>
+        <button type="button" class="icon-btn" id="modal-close">✕</button>
+      </div>
+      <form id="news-form">
+        <input type="hidden" id="edit-slug" />
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="form-label">Title *</label>
+            <input class="form-input" id="title" required />
+          </div>
+          <div>
+            <label class="form-label">Slug</label>
+            <input class="form-input" id="slug" placeholder="auto" />
+          </div>
+        </div>
+        <div style="margin-top:1rem">
+          <label class="form-label">Short description</label>
+          <input class="form-input" id="short_description" />
+        </div>
+        <div style="margin-top:1rem">
+          <label class="form-label">Full description</label>
+          <textarea class="form-textarea" id="full_description"></textarea>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4" style="margin-top:1rem">
+          <div>
+            <label class="form-label">Button text</label>
+            <input class="form-input" id="button_text" />
+          </div>
+          <div>
+            <label class="form-label">Button URL</label>
+            <input class="form-input" id="button_url" />
+          </div>
+        </div>
+        <div style="margin-top:1rem">
+          <label class="form-label">Image</label>
+          <input type="file" id="image" accept="image/*" class="form-input" />
+        </div>
+        <div class="grid sm:grid-cols-3 gap-4" style="margin-top:1rem">
+          <div>
+            <label class="form-label">Display order</label>
+            <input class="form-input" type="number" id="display_order" value="0" />
+          </div>
+          <label style="display:flex;align-items:center;gap:0.5rem;margin-top:1.5rem;cursor:pointer">
+            <input type="checkbox" id="featured" /> Featured
+          </label>
+          <label style="display:flex;align-items:center;gap:0.5rem;margin-top:1.5rem;cursor:pointer">
+            <input type="checkbox" id="published" checked /> Published
+          </label>
+        </div>
+        <div style="display:flex;gap:0.75rem;justify-content:flex-end;margin-top:1.5rem">
+          <button type="button" class="btn btn-ghost" id="modal-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="save-btn">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="delete-modal">
+    <div class="modal-panel" style="max-width:400px">
+      <h2 class="font-display" style="margin:0 0 0.75rem;font-size:1.1rem">Delete news?</h2>
+      <p id="delete-msg" style="color:var(--text-muted);font-size:0.9rem"></p>
+      <div style="display:flex;gap:0.75rem;justify-content:flex-end;margin-top:1.25rem">
+        <button type="button" class="btn btn-ghost" id="delete-cancel">Cancel</button>
+        <button type="button" class="btn btn-danger" id="delete-confirm">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/news.js"></script>
+</body>
+</html>

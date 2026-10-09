@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EseXO Admin — Site Settings</title>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('esexo_admin_theme');
+        document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+    })();
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/admin.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+  <div class="admin-shell">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar">
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <button type="button" class="menu-btn" id="menu-btn">☰</button>
+          <h1 class="font-display topbar-title">Site Settings</h1>
+        </div>
+        <div class="topbar-actions">
+          <button type="button" class="icon-btn" id="theme-toggle">◐</button>
+          <span class="topbar-user" id="admin-username"></span>
+        </div>
+      </header>
+      <main class="content">
+        <form id="settings-form" class="card" style="max-width:720px">
+          <h2 class="font-display" style="font-size:1rem;margin:0 0 1rem">Artist</h2>
+          <label class="form-label">Artist name</label>
+          <input class="form-input" id="artist_name" />
+          <label class="form-label" style="margin-top:0.75rem">Bio</label>
+          <textarea class="form-textarea" id="artist_bio"></textarea>
+          <div class="grid sm:grid-cols-2 gap-4" style="margin-top:0.75rem">
+            <div>
+              <label class="form-label">Profile image</label>
+              <input type="file" id="profile_image" accept="image/*" class="form-input" />
+            </div>
+            <div>
+              <label class="form-label">Logo</label>
+              <input type="file" id="logo" accept="image/*" class="form-input" />
+            </div>
+          </div>
+
+          <h2 class="font-display" style="font-size:1rem;margin:1.75rem 0 1rem">Social & streaming</h2>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="form-label">Spotify artist URL</label>
+              <input class="form-input" id="spotify_artist_url" type="url" />
+            </div>
+            <div>
+              <label class="form-label">Instagram</label>
+              <input class="form-input" id="instagram_url" type="url" />
+            </div>
+            <div>
+              <label class="form-label">TikTok</label>
+              <input class="form-input" id="tiktok_url" type="url" />
+            </div>
+            <div>
+              <label class="form-label">YouTube</label>
+              <input class="form-input" id="youtube_url" type="url" />
+            </div>
+            <div>
+              <label class="form-label">X / Twitter</label>
+              <input class="form-input" id="x_twitter_url" type="url" />
+            </div>
+            <div>
+              <label class="form-label">Audiomack</label>
+              <input class="form-input" id="audiomack_url" type="url" />
+            </div>
+          </div>
+
+          <h2 class="font-display" style="font-size:1rem;margin:1.75rem 0 1rem">Contact</h2>
+          <label class="form-label">Contact email</label>
+          <input class="form-input" id="contact_email" type="email" />
+
+          <div style="margin-top:1.5rem">
+            <button type="submit" class="btn btn-primary" id="save-btn">Save settings</button>
+          </div>
+        </form>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/settings.js"></script>
+</body>
+</html>

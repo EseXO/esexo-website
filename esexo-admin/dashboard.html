@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EseXO Admin — Dashboard</title>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('esexo_admin_theme');
+        document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+    })();
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/admin.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+  <div class="admin-shell">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar">
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <button type="button" class="menu-btn" id="menu-btn" aria-label="Menu">☰</button>
+          <h1 class="font-display topbar-title">Dashboard</h1>
+        </div>
+        <div class="topbar-actions">
+          <button type="button" class="icon-btn" id="theme-toggle" title="Toggle theme" aria-label="Toggle theme">◐</button>
+          <span class="topbar-user">Hi, <strong id="admin-username">—</strong></span>
+        </div>
+      </header>
+      <main class="content">
+        <p id="greeting" style="color:var(--text-muted);margin:0 0 1.5rem;font-size:0.95rem">Welcome back</p>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8" id="stats">
+          <div class="stat-card"><div class="stat-value skeleton" style="width:3rem;height:1.75rem"></div><div class="stat-label">Releases</div></div>
+          <div class="stat-card"><div class="stat-value skeleton" style="width:3rem;height:1.75rem"></div><div class="stat-label">News</div></div>
+          <div class="stat-card"><div class="stat-value skeleton" style="width:3rem;height:1.75rem"></div><div class="stat-label">Videos</div></div>
+          <div class="stat-card"><div class="stat-value skeleton" style="width:3rem;height:1.75rem"></div><div class="stat-label">Gallery</div></div>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-6 mb-8">
+          <div class="card">
+            <h2 class="font-display" style="font-size:1rem;margin:0 0 1rem">Upcoming</h2>
+            <div id="upcoming-box" style="color:var(--text-muted);font-size:0.9rem">Loading…</div>
+          </div>
+          <div class="card">
+            <h2 class="font-display" style="font-size:1rem;margin:0 0 1rem">Quick actions</h2>
+            <div style="display:flex;flex-wrap:wrap;gap:0.5rem">
+              <a href="releases.html" class="btn btn-primary btn-sm">+ Add Release</a>
+              <a href="news.html" class="btn btn-ghost btn-sm">+ Add News</a>
+              <a href="videos.html" class="btn btn-ghost btn-sm">+ Add Video</a>
+              <a href="gallery.html" class="btn btn-ghost btn-sm">+ Upload Image</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="font-display" style="font-size:1rem;margin:0 0 1rem">Recent releases</h2>
+          <div id="recent-releases" style="color:var(--text-muted);font-size:0.9rem">Loading…</div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    (async function () {
+      document.getElementById('sidebar').innerHTML = EseXOAuth.sidebarHTML();
+      const user = await EseXOAuth.requireAuth();
+      if (!user) return;
+      EseXOAuth.bindShell(user);
+
+      const hour = new Date().getHours();
+      const greet = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+      document.getElementById('greeting').textContent = greet + ', ' + user.username;
+
+      try {
+        const [releases, news, videos, gallery] = await Promise.all([
+          EseXOAdminApi.getReleases(),
+          EseXOAdminApi.getNews(),
+          EseXOAdminApi.getVideos(),
+          EseXOAdminApi.getGallery(),
+        ]);
+
+        const stats = document.getElementById('stats');
+        stats.innerHTML = [
+          ['Releases', releases.length],
+          ['News', news.length],
+          ['Videos', videos.length],
+          ['Gallery', gallery.length],
+        ].map(function (s) {
+          return '<div class="stat-card"><div class="stat-value">' + s[1] + '</div><div class="stat-label">' + s[0] + '</div></div>';
+        }).join('');
+
+        const upcoming = releases.filter(function (r) { return r.status === 'UPCOMING'; });
+        const upEl = document.getElementById('upcoming-box');
+        if (!upcoming.length) {
+          upEl.textContent = 'No upcoming releases.';
+        } else {
+          upEl.innerHTML = upcoming.slice(0, 3).map(function (r) {
+            return '<div style="margin-bottom:0.65rem"><strong>' + r.title + '</strong> · ' +
+              (r.release_date || 'TBA') +
+              ' <span class="badge badge-upcoming">Upcoming</span></div>';
+          }).join('');
+        }
+
+        const recent = releases.slice(0, 5);
+        const recEl = document.getElementById('recent-releases');
+        if (!recent.length) {
+          recEl.textContent = 'No releases yet.';
+        } else {
+          recEl.innerHTML = '<div class="table-wrap"><table class="data-table"><thead><tr><th>Title</th><th>Type</th><th>Status</th><th>Date</th></tr></thead><tbody>' +
+            recent.map(function (r) {
+              const badge = r.status === 'UPCOMING' ? 'badge-upcoming' : r.status === 'RELEASED' ? 'badge-released' : 'badge-archived';
+              return '<tr><td>' + r.title + '</td><td>' + r.release_type + '</td><td><span class="badge ' + badge + '">' + r.status + '</span></td><td>' + (r.release_date || '—') + '</td></tr>';
+            }).join('') + '</tbody></table></div>';
+        }
+      } catch (err) {
+        EseXOAuth.toast(err.message || 'Failed to load dashboard', 'error');
+      }
+    })();
+  </script>
+</body>
+</html>

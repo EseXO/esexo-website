@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EseXO Admin — Login</title>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('esexo_admin_theme');
+        document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+  <div class="login-page">
+    <div class="login-card">
+      <div style="text-align:center;margin-bottom:1.75rem">
+        <div class="font-display" style="font-size:1.75rem;font-weight:800;letter-spacing:-0.03em">
+          ESE<span style="color:var(--accent)">XO</span>
+        </div>
+        <p style="font-size:0.7rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--text-muted);margin-top:0.35rem">Admin</p>
+      </div>
+
+      <form id="login-form">
+        <div style="margin-bottom:1rem">
+          <label class="form-label" for="username">Username</label>
+          <input class="form-input" id="username" name="username" autocomplete="username" required />
+        </div>
+        <div style="margin-bottom:1rem">
+          <label class="form-label" for="password">Password</label>
+          <div style="position:relative">
+            <input class="form-input" id="password" name="password" type="password" autocomplete="current-password" required style="padding-right:2.75rem" />
+            <button type="button" id="toggle-pass" class="icon-btn" style="position:absolute;right:0.4rem;top:50%;transform:translateY(-50%)" aria-label="Show password">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+        <p id="login-error" style="color:var(--danger);font-size:0.85rem;margin:0 0 1rem;display:none"></p>
+        <button type="submit" class="btn btn-primary" id="login-btn" style="width:100%">
+          <span id="login-btn-text">Log in</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    (function () {
+      EseXOAuth.initTheme();
+      if (EseXOAdminApi.getToken()) {
+        window.location.href = 'dashboard.html';
+        return;
+      }
+
+      const form = document.getElementById('login-form');
+      const errEl = document.getElementById('login-error');
+      const btn = document.getElementById('login-btn');
+      const btnText = document.getElementById('login-btn-text');
+      const pass = document.getElementById('password');
+
+      document.getElementById('toggle-pass').addEventListener('click', function () {
+        const show = pass.type === 'password';
+        pass.type = show ? 'text' : 'password';
+        this.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+      });
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        errEl.style.display = 'none';
+        btn.disabled = true;
+        btnText.textContent = 'Signing in…';
+        try {
+          await EseXOAdminApi.login(
+            document.getElementById('username').value.trim(),
+            pass.value
+          );
+          EseXOAuth.toast('Login successful', 'success');
+          window.location.href = 'dashboard.html';
+        } catch (err) {
+          errEl.textContent = err.message || 'Login failed';
+          errEl.style.display = 'block';
+          btn.disabled = false;
+          btnText.textContent = 'Log in';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

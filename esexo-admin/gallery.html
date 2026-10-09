@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EseXO Admin — Gallery</title>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('esexo_admin_theme');
+        document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+    })();
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+  <link rel="stylesheet" href="css/gallery-admin.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+  <div class="admin-shell">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="main">
+      <header class="topbar">
+        <div>
+          <button type="button" class="menu-btn" id="menu-btn" aria-label="Menu">☰</button>
+          <h1 class="font-display topbar-title">Gallery</h1>
+        </div>
+        <div class="topbar-actions">
+          <button type="button" class="icon-btn" id="theme-toggle" aria-label="Toggle theme">◐</button>
+          <span class="topbar-user" id="admin-username"></span>
+          <button type="button" class="btn btn-ghost btn-sm" id="btn-groups">Groups</button>
+          <button type="button" class="btn btn-primary btn-sm" id="btn-upload">+ Upload</button>
+        </div>
+      </header>
+      <main class="content">
+        <div class="gallery-tabs" role="tablist">
+          <button type="button" class="gallery-tab active" data-tab="library">Image library</button>
+          <button type="button" class="gallery-tab" data-tab="groups">Gallery groups</button>
+        </div>
+        <div id="tab-library">
+          <div class="toolbar">
+            <input class="form-input" id="search" placeholder="Search images…" />
+            <select class="form-select" id="filter-published">
+              <option value="">All visibility</option>
+              <option value="true">Published</option>
+              <option value="false">Hidden</option>
+            </select>
+            <select class="form-select" id="filter-featured">
+              <option value="">Featured: any</option>
+              <option value="true">Featured</option>
+              <option value="false">Not featured</option>
+            </select>
+            <select class="form-select" id="sort-by">
+              <option value="order">Sort: order</option>
+              <option value="newest">Newest</option>
+              <option value="title">Title</option>
+            </select>
+          </div>
+          <div class="bulk-bar" id="bulk-bar" hidden>
+            <span id="bulk-count">0 selected</span>
+            <button type="button" class="btn btn-ghost btn-sm" id="bulk-publish">Publish</button>
+            <button type="button" class="btn btn-ghost btn-sm" id="bulk-unpublish">Unpublish</button>
+            <button type="button" class="btn btn-ghost btn-sm" id="bulk-to-group">Add to group</button>
+            <button type="button" class="btn btn-danger btn-sm" id="bulk-delete">Delete</button>
+            <button type="button" class="btn btn-ghost btn-sm" id="bulk-clear">Clear</button>
+          </div>
+          <p class="hint-text">Drag cards to reorder. Order is saved to the server.</p>
+          <div id="grid" class="gallery-lib-grid"></div>
+        </div>
+        <div id="tab-groups" hidden>
+          <div class="toolbar">
+            <button type="button" class="btn btn-primary btn-sm" id="btn-new-group">+ New group</button>
+          </div>
+          <div id="groups-list"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <div class="modal-overlay" id="modal">
+    <div class="modal-panel wide">
+      <div class="modal-head">
+        <h2 class="font-display" id="modal-title">Upload images</h2>
+        <button type="button" class="icon-btn" id="modal-close" aria-label="Close">✕</button>
+      </div>
+      <form id="gallery-form">
+        <input type="hidden" id="edit-id" />
+        <div id="upload-zone" class="upload-zone">
+          <input type="file" id="image-files" accept="image/jpeg,image/png,image/webp,image/jpg" multiple class="file-input" />
+          <p>Drop images or click to select</p>
+          <p class="hint-text">JPG, PNG, WebP · multiple allowed</p>
+        </div>
+        <div id="upload-queue" class="upload-queue"></div>
+        <div id="crop-section" class="crop-section" hidden>
+          <div class="crop-toolbar">
+            <select class="form-select" id="aspect-ratio">
+              <option value="NaN">Original</option>
+              <option value="1">Square 1:1</option>
+              <option value="1.333">Landscape 4:3</option>
+              <option value="1.777">Landscape 16:9</option>
+              <option value="0.8">Portrait 4:5</option>
+              <option value="0.75">Portrait 3:4</option>
+              <option value="0.5625">Portrait 9:16</option>
+            </select>
+            <button type="button" class="btn btn-ghost btn-sm" id="crop-rotate">Rotate</button>
+            <button type="button" class="btn btn-ghost btn-sm" id="crop-reset">Reset</button>
+          </div>
+          <div class="crop-wrap"><img id="crop-image" alt="Crop" /></div>
+          <div class="preview-row">
+            <div>
+              <p class="form-label">Public preview</p>
+              <div id="fit-preview" class="fit-preview" data-mode="COVER">
+                <img id="fit-preview-img" alt="" />
+              </div>
+            </div>
+            <div>
+              <p class="form-label">Device</p>
+              <div class="device-toggles">
+                <button type="button" class="btn btn-ghost btn-sm active" data-device="desktop">Desktop</button>
+                <button type="button" class="btn btn-ghost btn-sm" data-device="tablet">Tablet</button>
+                <button type="button" class="btn btn-ghost btn-sm" data-device="mobile">Mobile</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div><label class="form-label">Title</label><input class="form-input" id="title" /></div>
+          <div><label class="form-label">Caption</label><input class="form-input" id="caption" /></div>
+          <div><label class="form-label">Category</label><input class="form-input" id="category" /></div>
+          <div>
+            <label class="form-label">Display mode</label>
+            <select class="form-select" id="display_mode">
+              <option value="COVER">Cover — fills area, may crop edges</option>
+              <option value="CONTAIN">Contain — full image visible</option>
+              <option value="NATURAL">Natural — natural proportions</option>
+              <option value="CROPPED">Cropped — use crop box</option>
+              <option value="FULL_WIDTH">Full-width</option>
+              <option value="PORTRAIT">Portrait frame</option>
+              <option value="LANDSCAPE">Landscape frame</option>
+              <option value="SQUARE">Square frame</option>
+            </select>
+          </div>
+          <div><label class="form-label">Focal point X (0–100)</label><input class="form-input" type="number" id="focal_x" min="0" max="100" value="50" /></div>
+          <div><label class="form-label">Focal point Y (0–100)</label><input class="form-input" type="number" id="focal_y" min="0" max="100" value="50" /></div>
+          <div><label class="form-label">Order</label><input class="form-input" type="number" id="display_order" value="0" /></div>
+        </div>
+        <div class="check-row">
+          <label><input type="checkbox" id="featured" /> Featured</label>
+          <label><input type="checkbox" id="published" checked /> Published</label>
+        </div>
+        <div id="upload-progress" class="upload-progress" hidden>
+          <div class="upload-progress-bar" id="upload-progress-bar"></div>
+          <span id="upload-progress-text">Uploading…</span>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="modal-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="save-btn">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-overlay" id="group-modal">
+    <div class="modal-panel wide">
+      <div class="modal-head">
+        <h2 class="font-display" id="group-modal-title">Gallery group</h2>
+        <button type="button" class="icon-btn" id="group-modal-close">✕</button>
+      </div>
+      <form id="group-form">
+        <input type="hidden" id="group-slug" />
+        <div class="form-grid">
+          <div><label class="form-label">Title *</label><input class="form-input" id="group-title" required /></div>
+          <div>
+            <label class="form-label">Layout</label>
+            <select class="form-select" id="group-layout">
+              <option value="MASONRY">Masonry</option>
+              <option value="GRID">Grid</option>
+              <option value="CAROUSEL">Carousel</option>
+              <option value="SLIDESHOW">Slideshow</option>
+              <option value="FEATURED_THUMBS">Featured + thumbnails</option>
+              <option value="FULLSCREEN">Fullscreen slider</option>
+              <option value="HORIZONTAL">Horizontal scroll</option>
+              <option value="SINGLE">Single image</option>
+            </select>
+          </div>
+        </div>
+        <label class="form-label" style="margin-top:0.75rem">Description</label>
+        <textarea class="form-textarea" id="group-description"></textarea>
+        <div class="check-row" style="margin-top:0.75rem;flex-wrap:wrap">
+          <label><input type="checkbox" id="group-published" checked /> Published</label>
+          <label><input type="checkbox" id="group-featured" /> Featured</label>
+          <label><input type="checkbox" id="group-autoplay" /> Autoplay</label>
+          <label><input type="checkbox" id="group-loop" checked /> Loop</label>
+          <label><input type="checkbox" id="group-arrows" checked /> Arrows</label>
+          <label><input type="checkbox" id="group-dots" checked /> Dots</label>
+          <label><input type="checkbox" id="group-thumbs" /> Thumbnails</label>
+          <label><input type="checkbox" id="group-lightbox" checked /> Lightbox</label>
+        </div>
+        <div class="form-grid" style="margin-top:0.75rem">
+          <div><label class="form-label">Autoplay speed (ms)</label><input class="form-input" type="number" id="group-speed" value="5000" min="1000" step="500" /></div>
+          <div><label class="form-label">Display order</label><input class="form-input" type="number" id="group-order" value="0" /></div>
+        </div>
+        <p class="form-label" style="margin-top:1rem">Images in this group</p>
+        <div id="group-image-picker" class="group-picker"></div>
+        <div id="group-selected" class="group-selected"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="group-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="group-save">Save group</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-overlay" id="delete-modal">
+    <div class="modal-panel" style="max-width:400px">
+      <h2 class="font-display" style="margin:0 0 0.75rem;font-size:1.1rem">Confirm delete</h2>
+      <p id="delete-msg" style="color:var(--text-muted);font-size:0.9rem"></p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="delete-cancel">Cancel</button>
+        <button type="button" class="btn btn-danger" id="delete-confirm">Delete</button>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/gallery.js"></script>
+</body>
+</html>
