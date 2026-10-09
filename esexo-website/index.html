@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="EseXO — Nigerian Afro X Artist. Welcome to Planet X." />
+  <meta name="theme-color" content="#0a0a0a" id="meta-theme-color" />
+  <title>EseXO | Planet X</title>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('esexo-theme');
+        if (t === 'light' || t === 'dark') {
+          document.documentElement.setAttribute('data-theme', t);
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            void: '#050505',
+            charcoal: '#0a0a0a',
+            smoke: '#121212',
+            ash: '#1a1a1a',
+            silver: '#c0c0c0',
+            cosmic: '#FF2D8D',
+            nebula: '#FF6BAF',
+            glow: '#FF2D8D',
+          },
+          fontFamily: {
+            display: ['Syne', 'system-ui', 'sans-serif'],
+            body: ['Outfit', 'system-ui', 'sans-serif'],
+          },
+          animation: {
+            'float': 'float 8s ease-in-out infinite',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'grain': 'grain 0.5s steps(1) infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-12px)' },
+            },
+            grain: {
+              '0%, 100%': { transform: 'translate(0, 0)' },
+              '10%': { transform: 'translate(-2%, -3%)' },
+              '30%': { transform: 'translate(3%, 2%)' },
+              '50%': { transform: 'translate(-1%, 4%)' },
+              '70%': { transform: 'translate(4%, -2%)' },
+              '90%': { transform: 'translate(-3%, 1%)' },
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-void text-white font-body antialiased overflow-x-hidden">
+  <!-- Noise Overlay -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- Minimal Header -->
+  <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 py-3.5 flex items-center justify-between">
+      <a href="#home" class="logo font-display text-xl sm:text-2xl font-bold tracking-tight hover:text-glow transition-colors duration-300">
+        Ese<span class="text-glow">XO</span>
+      </a>
+      <div class="flex items-center gap-3 sm:gap-4">
+        <button
+          type="button"
+          id="theme-toggle"
+          class="theme-toggle"
+          aria-label="Switch to light mode"
+          title="Switch to Light Mode"
+        >
+          <svg class="theme-icon theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+          <svg class="theme-icon theme-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 14.5A8.5 8.5 0 1 1 9.5 3a7 7 0 0 0 11.5 11.5z"/>
+          </svg>
+        </button>
+        <div class="flex items-center gap-2">
+          <span class="live-dot" aria-hidden="true"></span>
+          <span class="broadcast-label text-[10px] sm:text-xs tracking-[0.25em] uppercase text-silver/50 font-medium">Broadcast</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- FIRST HERO — EseXO News & Release Hub -->
+    <section id="news-hub" class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden" aria-label="EseXO News Hub">
+      <!-- Atmospheric background -->
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute inset-0 bg-gradient-to-b from-void via-charcoal/50 to-void"></div>
+        <div class="news-orb news-orb-1"></div>
+        <div class="news-orb news-orb-2"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vmin] h-[70vmin] max-w-[640px] max-h-[640px] rounded-full border border-white/[0.03]"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50vmin] h-[50vmin] max-w-[440px] max-h-[440px] rounded-full border border-white/[0.04]"></div>
+        <div class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-void to-transparent"></div>
+      </div>
+
+      <div class="relative z-10 w-full max-w-5xl mx-auto px-5 sm:px-8 pt-24 pb-20 flex flex-col items-center">
+        <!-- Status label -->
+        <p class="news-status mb-8 sm:mb-10">
+          <span class="live-dot" aria-hidden="true"></span>
+          <span>Now on Planet X</span>
+        </p>
+
+        <div class="relative w-full news-viewport" id="news-viewport">
+          <!-- API-driven news slides -->
+        </div>
+
+        <!-- Progress + Controls -->
+        <div class="news-controls mt-12 sm:mt-14 w-full max-w-xs flex flex-col items-center gap-5">
+          <div class="news-progress" aria-hidden="true">
+            <div class="news-progress-bar" id="news-progress-bar"></div>
+          </div>
+          <div class="flex items-center justify-center gap-5">
+            <button id="news-prev" class="news-nav-btn" aria-label="Previous update">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <div class="news-dots flex items-center gap-2.5" role="tablist" aria-label="News updates" id="news-dots">
+            </div>
+            <button id="news-next" class="news-nav-btn" aria-label="Next update">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll cue -->
+      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-35">
+        <div class="w-px h-10 bg-gradient-to-b from-silver/50 to-transparent"></div>
+      </div>
+    </section>
+
+    <!-- SECOND HERO — EseXO Identity -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <!-- Atmospheric Background -->
+      <div class="absolute inset-0 hero-bg">
+        <div class="absolute inset-0 bg-gradient-to-b from-void via-charcoal/80 to-void"></div>
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-cosmic/10 rounded-full blur-[120px] animate-pulse-slow"></div>
+        <div class="absolute bottom-1/3 right-1/4 w-80 h-80 bg-nebula/8 rounded-full blur-[100px] animate-float"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white/5 rounded-full"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border border-white/5 rounded-full"></div>
+      </div>
+
+      <!-- Floating Particles -->
+      <div class="particles absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+
+      <div class="relative z-10 text-center px-5 max-w-4xl mx-auto">
+        <p class="hero-tagline opacity-0 translate-y-4 text-silver/60 text-xs sm:text-sm tracking-[0.35em] uppercase mb-6 font-medium">
+          Welcome to Planet X
+        </p>
+        <h1 class="hero-title opacity-0 translate-y-6 font-display text-6xl sm:text-8xl md:text-9xl font-extrabold tracking-tighter leading-none mb-4">
+          ESE<span class="text-glow">XO</span>
+        </h1>
+        <p class="hero-sub opacity-0 translate-y-4 text-silver/70 text-base sm:text-lg tracking-widest uppercase mb-10 font-light">
+          Naija Afro X Artist
+        </p>
+        <div class="hero-cta opacity-0 translate-y-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="https://open.spotify.com/artist/6hiqxSLi3KpWwpnwC4L5bw?si=gBcwtLRbReuNkT6ukkFLmA" target="_blank" rel="noopener noreferrer" class="btn-primary group">
+            <span>Listen Now</span>
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#about" class="btn-ghost">
+            Enter the World
+          </a>
+        </div>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-60">
+        <span class="text-[10px] tracking-[0.3em] uppercase text-silver/50">Scroll</span>
+        <div class="w-px h-10 bg-gradient-to-b from-silver/40 to-transparent"></div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="relative py-24 sm:py-32 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-b from-void via-smoke/50 to-void"></div>
+      <div class="relative max-w-6xl mx-auto px-5 sm:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <!-- Visual -->
+          <div class="reveal order-2 lg:order-1 relative">
+            <div class="about-visual relative aspect-[4/5] max-w-md mx-auto lg:mx-0 overflow-hidden rounded-sm">
+              <div class="absolute inset-0 bg-gradient-to-br from-ash via-smoke to-charcoal"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="text-center">
+                  <div class="w-24 h-24 mx-auto mb-4 rounded-full border border-white/10 flex items-center justify-center">
+                    <span class="font-display text-3xl font-bold text-glow">X</span>
+                  </div>
+                  <p class="text-silver/40 text-xs tracking-widest uppercase">Artist Visual</p>
+                </div>
+              </div>
+              <!-- Decorative frame -->
+              <div class="absolute inset-3 border border-white/10 pointer-events-none"></div>
+              <div class="absolute -top-4 -right-4 w-20 h-20 border border-cosmic/30 rounded-full blur-sm"></div>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="reveal order-1 lg:order-2">
+            <p class="text-glow/80 text-xs tracking-[0.3em] uppercase mb-4 font-medium">The Artist</p>
+            <h2 class="font-display text-4xl sm:text-5xl font-bold tracking-tight mb-6">
+              About <span class="text-glow">EseXO</span>
+            </h2>
+            <p id="artist-bio" class="text-silver/70 text-base sm:text-lg leading-relaxed mb-8 max-w-lg">
+              EseXO is a Nigerian Afro X artist creating music from experience, emotion, ambition and the streets. His sound blends raw storytelling with an atmospheric and futuristic identity.
+            </p>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-3 gap-4 sm:gap-6">
+              <div class="stat-card">
+                <span class="stat-label">Origin</span>
+                <span class="stat-value">Nigeria</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">Sound</span>
+                <span class="stat-value">Afro X</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">World</span>
+                <span class="stat-value">Planet X</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Music Section -->
+    <section id="music" class="relative py-24 sm:py-32">
+      <div class="absolute inset-0 bg-void"></div>
+      <div class="relative max-w-6xl mx-auto px-5 sm:px-8">
+        <div class="text-center mb-14 reveal">
+          <p class="text-glow/80 text-xs tracking-[0.3em] uppercase mb-3 font-medium">Discography</p>
+          <h2 class="font-display text-4xl sm:text-5xl font-bold tracking-tight">Music</h2>
+        </div>
+
+        <!-- Featured upcoming (API) -->
+        <div class="reveal mb-12 sm:mb-16" id="featured-release-wrap" hidden>
+          <div class="release-featured flex flex-col sm:flex-row items-center gap-8 sm:gap-12 p-6 sm:p-8 bg-ash/40" id="featured-release">
+          </div>
+        </div>
+
+        <!-- Released catalog (API) -->
+        <div class="reveal grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6" id="releases-grid">
+          <p class="col-span-full text-center text-silver/40 text-sm py-8" id="releases-loading">Loading releases…</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Videos Section -->
+    <section id="videos" class="relative py-24 sm:py-32 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-b from-void via-smoke/30 to-void"></div>
+      <div class="relative max-w-6xl mx-auto px-5 sm:px-8">
+        <div class="text-center mb-14 reveal">
+          <p class="text-glow/80 text-xs tracking-[0.3em] uppercase mb-3 font-medium">Visuals</p>
+          <h2 class="font-display text-4xl sm:text-5xl font-bold tracking-tight">Videos</h2>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-5 sm:gap-6">
+          <p class="col-span-full text-center text-silver/40 text-sm py-8" id="videos-loading">Loading videos…</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="relative py-24 sm:py-32">
+      <div class="absolute inset-0 bg-void"></div>
+      <div class="relative max-w-6xl mx-auto px-5 sm:px-8">
+        <div class="text-center mb-14 reveal">
+          <p class="text-glow/80 text-xs tracking-[0.3em] uppercase mb-3 font-medium">Moments</p>
+          <h2 class="font-display text-4xl sm:text-5xl font-bold tracking-tight">Gallery</h2>
+        </div>
+
+        <div class="gallery-masonry reveal" id="gallery-masonry">
+          <p class="text-center text-silver/40 text-sm py-8" id="gallery-loading">Loading gallery…</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- X-Tribe / Community Section -->
+    <section id="tribe" class="relative py-24 sm:py-32 overflow-hidden">
+      <div class="absolute inset-0">
+        <div class="absolute inset-0 bg-gradient-to-b from-void via-charcoal to-void"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cosmic/8 rounded-full blur-[140px]"></div>
+      </div>
+      <div class="relative max-w-3xl mx-auto px-5 sm:px-8 text-center">
+        <div class="reveal">
+          <p class="text-glow/80 text-xs tracking-[0.3em] uppercase mb-4 font-medium">Community</p>
+          <h2 class="font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6">
+            Join the <span class="text-glow">X-Tribe</span>
+          </h2>
+          <p class="text-silver/60 text-base sm:text-lg leading-relaxed mb-10 max-w-md mx-auto">
+            Enter the world. Follow the journey. Become part of the Tribe.
+          </p>
+          <div class="flex flex-wrap items-center justify-center gap-4">
+            <a href="https://tiktok.com" data-social="tiktok" target="_blank" rel="noopener" class="social-btn" aria-label="TikTok">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.5a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.7a8.2 8.2 0 004.76 1.52V6.79a4.85 4.85 0 01-1-.1z"/></svg>
+              <span>TikTok</span>
+            </a>
+            <a href="https://instagram.com" data-social="instagram" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95C23.73 2.7 21.31.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32zM12 16a4 4 0 110-8 4 4 0 010 8zm6.41-11.85a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg>
+              <span>Instagram</span>
+            </a>
+            <a href="https://youtube.com" data-social="youtube" target="_blank" rel="noopener" class="social-btn" aria-label="YouTube">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.5 6.19a3.02 3.02 0 00-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 00.5 6.19 31.6 31.6 0 000 12a31.6 31.6 0 00.5 5.81 3.02 3.02 0 002.12 2.14c1.84.55 9.38.55 9.38.55s7.54 0 9.38-.55a3.02 3.02 0 002.12-2.14A31.6 31.6 0 0024 12a31.6 31.6 0 00-.5-5.81zM9.75 15.57V8.43L15.82 12l-6.07 3.57z"/></svg>
+              <span>YouTube</span>
+            </a>
+            <a href="https://x.com" data-social="x" target="_blank" rel="noopener" class="social-btn" aria-label="X / Twitter">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.96 6.82H1.68l7.73-8.84L1.25 2.25h6.81l4.71 6.23 5.47-6.23zm-1.16 17.52h1.83L7.03 4.13H5.06l12.02 15.64z"/></svg>
+              <span>X</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="relative py-24 sm:py-32">
+      <div class="absolute inset-0 bg-gradient-to-b from-void via-smoke/20 to-void"></div>
+      <div class="relative max-w-2xl mx-auto px-5 sm:px-8 text-center">
+        <div class="reveal">
+          <p class="text-glow/80 text-xs tracking-[0.3em] uppercase mb-4 font-medium">Get in Touch</p>
+          <h2 class="font-display text-4xl sm:text-5xl font-bold tracking-tight mb-6">Contact</h2>
+          <p class="text-silver/60 text-base mb-8 max-w-sm mx-auto">
+            For bookings, collaborations and inquiries.
+          </p>
+          <a href="mailto:esexo813@gmail.com" id="contact-email-display" class="inline-block text-lg sm:text-xl font-medium text-white hover:text-glow transition-colors duration-300 mb-8 tracking-wide">
+            esexo813@gmail.com
+          </a>
+          <div class="flex justify-center">
+            <a href="mailto:esexo813@gmail.com" id="contact-email-btn" class="btn-primary">
+              <span>Book / Contact</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="relative border-t border-white/5 py-12 sm:py-16">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-8">
+        <div class="text-center sm:text-left">
+          <p class="font-display text-2xl font-bold tracking-tight mb-1">ESE<span class="text-glow">XO</span></p>
+          <p class="text-silver/40 text-xs tracking-[0.3em] uppercase">Planet X</p>
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="https://tiktok.com" target="_blank" rel="noopener" class="text-silver/50 hover:text-white transition-colors" aria-label="TikTok">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.5a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.7a8.2 8.2 0 004.76 1.52V6.79a4.85 4.85 0 01-1-.1z"/></svg>
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener" class="text-silver/50 hover:text-white transition-colors" aria-label="Instagram">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95C23.73 2.7 21.31.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32zM12 16a4 4 0 110-8 4 4 0 010 8zm6.41-11.85a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg>
+          </a>
+          <a href="https://youtube.com" target="_blank" rel="noopener" class="text-silver/50 hover:text-white transition-colors" aria-label="YouTube">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.5 6.19a3.02 3.02 0 00-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 00.5 6.19 31.6 31.6 0 000 12a31.6 31.6 0 00.5 5.81 3.02 3.02 0 002.12 2.14c1.84.55 9.38.55 9.38.55s7.54 0 9.38-.55a3.02 3.02 0 002.12-2.14A31.6 31.6 0 0024 12a31.6 31.6 0 00-.5-5.81zM9.75 15.57V8.43L15.82 12l-6.07 3.57z"/></svg>
+          </a>
+          <a href="https://x.com" target="_blank" rel="noopener" class="text-silver/50 hover:text-white transition-colors" aria-label="X">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.96 6.82H1.68l7.73-8.84L1.25 2.25h6.81l4.71 6.23 5.47-6.23zm-1.16 17.52h1.83L7.03 4.13H5.06l12.02 15.64z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="mt-10 pt-8 border-t border-white/5 text-center">
+        <p class="text-silver/30 text-xs tracking-wider">© 2026 EseXO. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Streaming Platform Modal -->
+  <div id="stream-modal" class="modal fixed inset-0 z-[100] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-400" role="dialog" aria-modal="true" aria-labelledby="stream-modal-title" hidden>
+    <div class="modal-backdrop absolute inset-0 bg-black/90 backdrop-blur-sm" data-stream-close></div>
+    <div class="modal-content stream-modal-panel relative w-full max-w-sm bg-charcoal/95 border border-white/10 overflow-hidden transform scale-95 transition-transform duration-400">
+      <button id="stream-modal-close" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors" aria-label="Close">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <div class="p-8 pt-10 text-center">
+        <div id="stream-modal-art" class="w-28 h-28 mx-auto mb-5 bg-gradient-to-br from-cosmic/40 via-ash to-void flex items-center justify-center shadow-[0_0_40px_rgba(255,45,141,0.2)]">
+          <span id="stream-modal-initials" class="font-display text-2xl font-bold text-white/40">XO</span>
+        </div>
+        <p class="text-[10px] tracking-[0.25em] uppercase text-silver/40 mb-1">Listen to</p>
+        <h3 id="stream-modal-title" class="font-display text-xl font-bold tracking-tight mb-1">Release</h3>
+        <p id="stream-modal-type" class="text-xs text-silver/40 tracking-wider uppercase mb-6">EP</p>
+        <p class="text-xs text-silver/50 tracking-wide mb-5">Where do you want to listen?</p>
+        <div class="flex flex-col gap-2.5">
+          <a id="stream-spotify" href="#" target="_blank" rel="noopener noreferrer" class="stream-platform-btn">
+            <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            <span>Spotify</span>
+          </a>
+          <a id="stream-apple" href="#" target="_blank" rel="noopener noreferrer" class="stream-platform-btn stream-platform-btn--disabled" aria-disabled="true">
+            <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M23.997 6.124c0-.738-.065-1.47-.24-2.19-.317-1.31-1.062-2.31-2.18-3.043C21.003.517 20.373.285 19.7.164c-.761-.135-1.53-.15-2.305-.151H6.605c-.774.001-1.544.016-2.305.151-.673.121-1.303.353-1.877.727C1.304 1.624.56 2.624.24 3.935.066 4.654.001 5.386.001 6.124v11.753c0 .738.065 1.47.24 2.19.318 1.31 1.063 2.31 2.18 3.042.574.375 1.204.606 1.877.728.761.134 1.53.15 2.305.15h10.79c.775 0 1.544-.016 2.305-.15.673-.122 1.303-.353 1.877-.728 1.118-.732 1.863-1.732 2.18-3.042.175-.72.24-1.452.24-2.19V6.124zM12.5 17.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8.5c-1.93 0-3.5 1.57-3.5 3.5s1.57 3.5 3.5 3.5 3.5-1.57 3.5-3.5-1.57-3.5-3.5-3.5z"/></svg>
+            <span>Apple Music</span>
+          </a>
+          <a id="stream-audiomack" href="#" target="_blank" rel="noopener noreferrer" class="stream-platform-btn stream-platform-btn--disabled" aria-disabled="true">
+            <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.2l7.5 3.75v7.1L12 18.8l-7.5-3.75v-7.1L12 4.2zM8 10v4h1.5v-4H8zm3 0v4h1.5v-4H11zm3 0v4H15.5v-4H14z"/></svg>
+            <span>Audiomack</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Video Modal -->
+  <div id="video-modal" class="modal fixed inset-0 z-[100] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-400" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal-backdrop absolute inset-0 bg-black/90 backdrop-blur-sm"></div>
+    <div class="modal-content relative w-full max-w-4xl bg-charcoal border border-white/10 rounded-sm overflow-hidden transform scale-95 transition-transform duration-400">
+      <button id="modal-close" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors" aria-label="Close">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <div class="aspect-video bg-ash flex items-center justify-center">
+        <div class="text-center p-8">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full border border-white/20 flex items-center justify-center">
+            <svg class="w-7 h-7 text-white/60 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <p id="modal-title" class="font-display text-xl font-semibold mb-1">Video Title</p>
+          <p class="text-silver/40 text-sm">Placeholder — video coming soon</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery Lightbox -->
+  <div id="lightbox" class="modal fixed inset-0 z-[100] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-400" role="dialog" aria-modal="true" hidden>
+    <div class="modal-backdrop absolute inset-0 bg-black/95 backdrop-blur-sm"></div>
+    <button id="lightbox-close" class="absolute top-5 right-5 z-10 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors" aria-label="Close">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+    <button type="button" id="lightbox-prev" aria-label="Previous image">‹</button>
+    <button type="button" id="lightbox-next" aria-label="Next image">›</button>
+    <div class="relative max-w-5xl w-full max-h-[85vh] flex items-center justify-center">
+      <div id="lightbox-content" class="w-full max-h-[80vh] bg-transparent flex items-center justify-center">
+        <span class="font-display text-4xl text-white/20">Image</span>
+      </div>
+    </div>
+    <div id="lightbox-counter">1 / 1</div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/content.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
